@@ -1,0 +1,414 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+/* =========================
+   🎯 DESIGN SYSTEM
+========================= */
+
+:root {
+  --bg-main: #ffffff;
+  --bg-secondary: #f8fafc;
+  --text-main: #0f172a;
+  --text-muted: #64748b;
+  --border-color: rgba(0,0,0,0.06);
+  --card-bg: rgba(255,255,255,0.9);
+}
+
+.dark {
+  --bg-main: #020617;
+  --bg-secondary: #020617;
+  --text-main: #ffffff;
+  --text-muted: #94a3b8;
+  --border-color: rgba(255,255,255,0.08);
+  --card-bg: rgba(255,255,255,0.05);
+}
+
+/* =========================
+   🌍 BASE
+========================= */
+
+
+body {
+  background:
+    radial-gradient(circle at 20% 20%, rgba(168,85,247,0.05), transparent 40%),
+    radial-gradient(circle at 80% 10%, rgba(34,197,94,0.04), transparent 45%),
+    linear-gradient(180deg, #fefefe, #f6f8fb);
+
+  color: var(--text-main);
+
+
+  transition: background 0.4s ease, color 0.3s ease;
+
+  will-change: scroll-position;
+}
+
+/* spotlight (lighter for performance) */
+body::before {
+  content: "";
+  position: fixed;
+  inset: 0;
+  pointer-events: none;
+  z-index: 0;
+
+  background: radial-gradient(
+    circle at 50% 40%,
+    rgba(168,85,247,0.03),
+    transparent 60%
+  );
+}
+
+/* grain (reduced cost) */
+body::after {
+  content: "";
+  position: fixed;
+  inset: 0;
+  pointer-events: none;
+  z-index: 1;
+
+  background-image: url("https://grainy-gradients.vercel.app/noise.svg");
+  opacity: 0.015;
+}
+
+/* ensure UI is above layers */
+#root {
+  position: relative;
+  z-index: 2;
+}
+
+/* =========================
+   🧠 HERO FIX
+========================= */
+
+.hero-section {
+  position: relative;
+}
+
+.hero-section::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
+
+  background:
+    radial-gradient(circle at 70% 40%, rgba(168,85,247,0.04), transparent 55%);
+}
+
+/* =========================
+   🧼 UI ELEMENTS
+========================= */
+
+/* NAVBAR (slightly reduced blur) */
+.navbar {
+  backdrop-filter: blur(10px);
+  background: rgba(255,255,255,0.8);
+  border-bottom: 1px solid rgba(0,0,0,0.06);
+}
+
+/* BUTTON */
+.btn-primary {
+  background: linear-gradient(135deg, #22c55e, #6366f1);
+  color: white;
+  border-radius: 12px;
+  padding: 12px 22px;
+
+  box-shadow: 0 10px 25px rgba(99,102,241,0.25);
+  transition: all 0.25s ease;
+}
+
+.btn-primary:hover {
+  transform: translateY(-2px) scale(1.02);
+  box-shadow: 0 25px 50px rgba(99,102,241,0.35);
+}
+
+/* CARD (BIG PERF FIX: removed blur) */
+.card {
+  position: relative;
+  background: #ffffff;
+  border-radius: 16px;
+  outline: 1px solid rgba(255,255,255,0.6);
+  outline-offset: -1px;
+
+  border: 1px solid rgba(0,0,0,0.08);
+
+  box-shadow:
+    0 4px 12px rgba(0,0,0,0.04),
+    0 10px 30px rgba(0,0,0,0.06);
+
+  transition: all 0.25s ease;
+  will-change: transform;
+}
+.card::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  border-radius: inherit;
+
+  background: linear-gradient(
+    to bottom,
+    rgba(255,255,255,0.6),
+    transparent 40%
+  );
+
+  opacity: 0.6;
+  pointer-events: none;
+}
+
+.card:hover {
+  transform: translateY(-6px);
+
+  box-shadow:
+    0 10px 25px rgba(0,0,0,0.08),
+    0 25px 60px rgba(0,0,0,0.12);
+}
+.card-content {
+  padding: 20px;
+}
+.card h3 {
+  font-weight: 600;
+  margin-bottom: 6px;
+}
+
+.card p {
+  font-size: 14px;
+  line-height: 1.5;
+}
+
+/* =========================
+   🌌 AURORA (DARK MODE ONLY)
+========================= */
+
+.aurora-bg {
+  position: fixed;
+  inset: 0;
+  z-index: 0;
+  pointer-events: none;
+
+  background:
+    radial-gradient(circle at 30% 20%, rgba(0,255,150,0.08), transparent 40%),
+    radial-gradient(circle at 70% 0%, rgba(120,80,255,0.1), transparent 50%),
+    radial-gradient(circle at 50% 100%, rgba(0,150,255,0.06), transparent 60%);
+}
+
+.aurora-bg::before {
+  content: "";
+  position: absolute;
+  inset: -20%;
+
+  background: linear-gradient(
+    180deg,
+    transparent,
+    rgba(0,255,180,0.3),
+    rgba(0,200,255,0.2),
+    rgba(140,100,255,0.3),
+    transparent
+  );
+
+  filter: blur(40px);
+  mix-blend-mode: screen;
+  animation: auroraMove 10s linear infinite alternate;
+}
+
+.aurora-bg::after {
+  content: "";
+  position: absolute;
+  inset: -30%;
+
+  background: linear-gradient(
+    180deg,
+    transparent,
+    rgba(0,255,180,0.15),
+    rgba(140,100,255,0.2),
+    transparent
+  );
+
+  filter: blur(60px);
+  mix-blend-mode: screen;
+  animation: auroraMoveSlow 16s linear infinite alternate;
+}
+
+/* BLOBS */
+.aurora-blob {
+  position: absolute;
+  width: 500px;
+  height: 500px;
+  border-radius: 50%;
+  filter: blur(80px);
+  opacity: 0.4;
+  mix-blend-mode: screen;
+}
+
+.aurora-blob-1 {
+  background: radial-gradient(circle, rgba(0,255,150,0.5), transparent 70%);
+  top: -150px;
+  left: -150px;
+}
+
+.aurora-blob-2 {
+  background: radial-gradient(circle, rgba(140,100,255,0.5), transparent 70%);
+  bottom: -150px;
+  right: -150px;
+}
+
+.aurora-blob-3 {
+  background: radial-gradient(circle, rgba(0,200,255,0.3), transparent 70%);
+  top: 40%;
+  left: 30%;
+}
+
+/* =========================
+   ⚡ ANIMATIONS
+========================= */
+
+@keyframes auroraMove {
+  0% { transform: translate3d(-5%, 0, 0); }
+  100% { transform: translate3d(5%, 0, 0); }
+}
+
+@keyframes auroraMoveSlow {
+  0% { transform: translate3d(3%, 0, 0); }
+  100% { transform: translate3d(-3%, 0, 0); }
+}
+
+/* =========================
+   🎯 MODE CONTROL
+========================= */
+
+:root .aurora-bg,
+:root .aurora-bg::before,
+:root .aurora-bg::after,
+:root .aurora-blob {
+  display: none;
+}
+
+.dark .aurora-bg,
+.dark .aurora-bg::before,
+.dark .aurora-bg::after,
+.dark .aurora-blob {
+  display: block;
+}
+
+/* =========================
+   ✍️ TEXT
+========================= */
+
+h1 {
+  font-weight: 700;
+  letter-spacing: -0.03em;
+}
+
+h1 span {
+  background: linear-gradient(135deg, #22c55e, #6366f1);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+}
+
+p {
+  color: var(--text-muted);
+}
+
+/* =========================
+   🎯 SCROLL + PERF
+========================= */
+
+::-webkit-scrollbar {
+  display: none;
+}
+
+.aurora-bg::before,
+.aurora-bg::after,
+.aurora-blob {
+  will-change: transform;
+}
+
+@custom-variant dark (&:where(.dark, .dark *));
+
+/* =========================
+   🔻 FOOTER (CLEAN PREMIUM)
+========================= */
+
+.footer {
+  background: linear-gradient(
+    to top,
+    rgba(255,255,255,0.95),
+    rgba(255,255,255,0.7)
+  );
+
+  backdrop-filter: blur(8px);
+  border-top: 1px solid rgba(0,0,0,0.06);
+}
+
+.footer::before {
+  content: "";
+  position: absolute;
+  top: 0;
+  left: 50%;
+  transform: translateX(-50%);
+  width: 60%;
+  height: 1px;
+
+  background: linear-gradient(
+    to right,
+    transparent,
+    rgba(168,85,247,0.25),
+    transparent
+  );
+}
+
+.footer-content {
+  max-width: 1100px;
+  margin: auto;
+  padding: 0 20px;
+
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.footer-text {
+  font-size: 14px;
+  color: var(--text-muted);
+}
+
+.footer-icons {
+  display: flex;
+  gap: 16px;
+}
+
+.footer-icons a {
+  width: 38px;
+  height: 38px;
+
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
+  border-radius: 50%;
+  background: rgba(0,0,0,0.04);
+  border: 1px solid rgba(0,0,0,0.06);
+
+  transition: all 0.25s ease;
+}
+
+.footer-icons a:hover {
+  transform: translateY(-3px);
+  background: rgba(168,85,247,0.12);
+  border-color: rgba(168,85,247,0.25);
+  box-shadow: 0 10px 25px rgba(168,85,247,0.15);
+}
+
+.input-premium {
+  @apply w-full p-3 rounded-lg outline-none transition-all duration-200;
+
+  /* LIGHT MODE (base) */
+  @apply bg-white/70 border border-black/10 text-black placeholder:text-gray-400;
+
+  /* DARK MODE */
+  @apply dark:bg-white/5 dark:border-white/10 dark:text-white dark:placeholder:text-gray-500;
+
+  /* GLASS EFFECT */
+  backdrop-filter: blur(10px);
+
+  /* FOCUS */
+  @apply focus:ring-2 focus:ring-green-400/40 dark:focus:ring-purple-400/40;
+}
