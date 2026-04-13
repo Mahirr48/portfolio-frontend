@@ -71,20 +71,20 @@ function App() {
         <CursorGlow />
 
         <Toaster
-  position="top-center"
-  containerStyle={{
-    top: "35%",
-    left: "50%",
-    transform: "translate(-50%, -50%)",
-  }}
-  toastOptions={{
-    style: {
-      background: "#0b0f14",
-      color: "#fff",
-      border: "1px solid rgba(255,255,255,0.1)",
-    },
-  }}
-/>
+          position="top-center"
+          containerStyle={{
+            top: "35%",
+            left: "50%",
+            transform: "translate(-50%, -50%)",
+          }}
+          toastOptions={{
+            style: {
+              background: "#0b0f14",
+              color: "#fff",
+              border: "1px solid rgba(255,255,255,0.1)",
+            },
+          }}
+        />
 
         <AnimatePresence mode="wait" initial={false}>
           <Routes location={location} key={location.pathname}>
